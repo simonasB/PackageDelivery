@@ -1,0 +1,108 @@
+@model PackageDelivery.Domain.Entities.Order
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Order</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.RegistrationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.RegistrationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.OrderState)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.OrderState)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DistanceBetweenPickUpAndDeliveryAddresses)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DistanceBetweenPickUpAndDeliveryAddresses)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DistanceBetweenPickUpPointAndDeliveryAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DistanceBetweenPickUpPointAndDeliveryAddress)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Volume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Volume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Length)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Length)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Width)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Width)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Height)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Height)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryAddress.AddressId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DeliveryShipment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DeliveryShipment.ShipmentId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PickUpAddress)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PickUpAddress.AddressId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PickUpPoint)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PickUpPoint.PickUpPointId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PickUpShipment)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PickUpShipment.ShipmentId)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.User)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.User.Id)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.OrderId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

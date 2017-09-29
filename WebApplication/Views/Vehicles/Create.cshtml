@@ -1,0 +1,112 @@
+@model PackageDelivery.Domain.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h2>Create</h2>
+
+<form asp-action="Create">
+    <div class="form-horizontal">
+        <h4>Vehicle</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input asp-for="IsActive" />
+                    <label asp-for="IsActive"></label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PlateNumber" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="PlateNumber" class="form-control" />
+                <span asp-validation-for="PlateNumber" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Color" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Color" class="form-control" />
+                <span asp-validation-for="Color" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Weight" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TrunkVolume" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TrunkVolume" class="form-control" />
+                <span asp-validation-for="TrunkVolume" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TrunkWidth" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TrunkWidth" class="form-control" />
+                <span asp-validation-for="TrunkWidth" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TrunkLength" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TrunkLength" class="form-control" />
+                <span asp-validation-for="TrunkLength" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DateOfManufacture" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DateOfManufacture" class="form-control" />
+                <span asp-validation-for="DateOfManufacture" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="CarRegistrationDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="CarRegistrationDate" class="form-control" />
+                <span asp-validation-for="CarRegistrationDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="VehicleState" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="VehicleState" class="form-control"></select>
+                <span asp-validation-for="VehicleState" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="TechnicalReviewDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="TechnicalReviewDate" class="form-control" />
+                <span asp-validation-for="TechnicalReviewDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="VehicleModelId" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="VehicleModelId" class ="form-control" asp-items="ViewBag.VehicleModelId"></select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -1,0 +1,90 @@
+@model PackageDelivery.Domain.Entities.Vehicle
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Vehicle</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.PlateNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.PlateNumber)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Color)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Color)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Weight)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Weight)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrunkVolume)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrunkVolume)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrunkWidth)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrunkWidth)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TrunkLength)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TrunkLength)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateOfManufacture)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.DateOfManufacture)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CarRegistrationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CarRegistrationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleState)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VehicleState)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.TechnicalReviewDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.TechnicalReviewDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VehicleModel)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VehicleModel.VehicleModelId)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.VehicleId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

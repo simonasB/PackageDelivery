@@ -1,0 +1,61 @@
+﻿@model string
+
+@{
+    ViewData["Title"] = "About";
+}
+<h2>@ViewData["Title"].</h2>
+<h3>@ViewData["Message"]</h3>
+
+<p>Use this area to provide additional information.</p>
+
+<div class="row map">
+    <div class="col-md-3">
+        <h2>Google Maps</h2>
+
+        <div class="google-map-canvas" id="map-canvas">
+        </div>
+        <ul>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517851">Run your app</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=517853">Run tools such as EF migrations and more</a></li>
+            <li><a href="https://go.microsoft.com/fwlink/?LinkID=398609">Publish to Microsoft Azure Web Apps</a></li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    var directionsDisplay;
+    var map;
+
+    function initMap() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var directionsService = new google.maps.DirectionsService();
+
+        // Create a map object and specify the DOM element for display.
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: {lat: -34.397, lng: 150.644},
+            scrollwheel: false,
+            zoom: 8
+        });
+        directionsDisplay.setMap(map);
+        var direction = @Html.Raw(@Model);
+        //directionsDisplay.setDirections(JSON.parse("{\"geocoded_waypoints\" : [{\"geocoder_status\" : \"ZERO_RESULTS\"},{\"geocoder_status\" : \"OK\",\"place_id\" : \"ChIJxcP_ZIkY50YRGPZDRxJgCow\",\"types\" : [ \"street_address\" ]},{\"geocoder_status\" : \"OK\",\"partial_match\" : true,\"place_id\" : \"ChIJi_zZpnoY50YR6suajPx6xrE\",\"types\" : [ \"street_address\" ]},{\"geocoder_status\" : \"ZERO_RESULTS\"}],\"routes\" : [],\"status\" : \"NOT_FOUND\"}"));
+        directionsDisplay.setDirections(direction);
+
+        var start = "Chicago,IL";
+        var end = "Los Angeles,CA";
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: 'DRIVING'
+        };
+        directionsService.route(request, function (result, status) {
+            if (status == 'OK') {
+                //directionsDisplay.setDirections(result);
+            }
+        });
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI4Wp8uObgOkkHoBd2k4K6s8VEiY3zeKc&callback=initMap"
+        async defer></script>

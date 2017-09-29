@@ -1,0 +1,101 @@
+@model IEnumerable<PackageDelivery.Domain.Entities.Vehicle>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.IsActive)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.PlateNumber)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Color)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Weight)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrunkVolume)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrunkWidth)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TrunkLength)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DateOfManufacture)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CarRegistrationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.VehicleState)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.TechnicalReviewDate)
+                </th>
+            <th>
+                @Html.DisplayNameFor(model => model.VehicleModel)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IsActive)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PlateNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Weight)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrunkVolume)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrunkWidth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TrunkLength)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOfManufacture)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CarRegistrationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TechnicalReviewDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.VehicleModel.VehicleModelId)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.VehicleId">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.VehicleId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.VehicleId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

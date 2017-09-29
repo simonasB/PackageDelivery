@@ -1,0 +1,134 @@
+@model PackageDelivery.Domain.Entities.Order
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h2>Edit</h2>
+
+<form asp-action="Edit">
+    <div class="form-horizontal">
+        <h4>Order</h4>
+        <hr />
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <input type="hidden" asp-for="OrderId" />
+        <div class="form-group">
+            <label asp-for="RegistrationDate" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="RegistrationDate" class="form-control" />
+                <span asp-validation-for="RegistrationDate" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="OrderState" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <select asp-for="OrderState" class="form-control"></select>
+                <span asp-validation-for="OrderState" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PickUpAddressId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="PickUpAddressId" class="form-control" asp-items="ViewBag.PickUpAddressId"></select>
+                <span asp-validation-for="PickUpAddressId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DeliveryAddressId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="DeliveryAddressId" class="form-control" asp-items="ViewBag.DeliveryAddressId"></select>
+                <span asp-validation-for="DeliveryAddressId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PickUpPointId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="PickUpPointId" class="form-control" asp-items="ViewBag.PickUpPointId"></select>
+                <span asp-validation-for="PickUpPointId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="UserId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="UserId" class="form-control" asp-items="ViewBag.UserId"></select>
+                <span asp-validation-for="UserId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="PickUpShipmentId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="PickUpShipmentId" class="form-control" asp-items="ViewBag.PickUpShipmentId"></select>
+                <span asp-validation-for="PickUpShipmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DeliveryShipmentId" class="control-label col-md-2"></label>
+            <div class="col-md-10">
+                <select asp-for="DeliveryShipmentId" class="form-control" asp-items="ViewBag.DeliveryShipmentId"></select>
+                <span asp-validation-for="DeliveryShipmentId" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DistanceBetweenPickUpAndDeliveryAddresses" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DistanceBetweenPickUpAndDeliveryAddresses" class="form-control" />
+                <span asp-validation-for="DistanceBetweenPickUpAndDeliveryAddresses" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="DistanceBetweenPickUpPointAndDeliveryAddress" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="DistanceBetweenPickUpPointAndDeliveryAddress" class="form-control" />
+                <span asp-validation-for="DistanceBetweenPickUpPointAndDeliveryAddress" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Weight" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Weight" class="form-control" />
+                <span asp-validation-for="Weight" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Volume" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Volume" class="form-control" />
+                <span asp-validation-for="Volume" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Length" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Length" class="form-control" />
+                <span asp-validation-for="Length" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Width" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Width" class="form-control" />
+                <span asp-validation-for="Width" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label asp-for="Height" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Height" class="form-control" />
+                <span asp-validation-for="Height" class="text-danger"></span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+</form>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

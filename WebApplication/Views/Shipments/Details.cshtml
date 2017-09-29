@@ -1,0 +1,145 @@
+@using PackageDelivery.Domain.Entities
+@using PackageDelivery.WebApplication.Base
+@model PackageDelivery.WebApplication.Models.ShipmentDetailsViewModel
+@inject UserManager<User> UserManager
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div class="row map">
+    <div class="col-md-12">
+        <h2>Google Maps</h2>
+
+        <div class="google-map-canvas" id="map-canvas">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div id="directionsPanel" class="col-md-12">
+        
+    </div>
+</div>
+<div>
+    <h4>Shipment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Shipment.ShipmentState)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shipment.ShipmentState)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Shipment.CreationDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shipment.CreationDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Shipment.FinishDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shipment.FinishDate)
+        </dd>
+        <dt>
+            Driver
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shipment.User.UserName)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Shipment.Vehicle)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Shipment.Vehicle.PlateNumber)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>
+                PickUp Address
+            </th>
+            <th>
+                Delivery Address
+            </th>
+            <th>
+                Volume
+            </th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @{
+            var orders = Model.Shipment.IsPickUp() ? Model.Shipment.PickUpOrders : Model.Shipment.DeliveryOrders;
+        }
+        @foreach (var item in orders) {
+            <tr>
+                <td>
+                    @item.PickUpAddress.ToString().Replace('+', ' ')
+                </td>
+                <td>
+                    @item.DeliveryAddress.ToString().Replace('+', ' ')
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Volume)
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
+<div>
+    @if (Model.Shipment.ShipmentState == ShipmentState.WaitingForManagerApprovalToStartPickUp) {
+        <a asp-action="Approve" asp-route-id="@Model.Shipment.ShipmentId">Approve</a>
+    }
+    @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), UserRoles.MANAGER) && Model.Shipment.ShipmentState == ShipmentState.ReadyToStartPickup) {
+        <a asp-action="Cancel" asp-route-id="@Model.Shipment.ShipmentId">Cancel</a>
+    }
+    @if (Model.Shipment.ShipmentState == ShipmentState.WaitingForManagerApprovalToStartDelivery) {
+        <a asp-action="Approve" asp-route-id="@Model.Shipment.ShipmentId">Approve</a>
+    }
+    @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), UserRoles.MANAGER) && Model.Shipment.ShipmentState == ShipmentState.ReadyToStartDelivery) {
+        <a asp-action="Cancel" asp-route-id="@Model.Shipment.ShipmentId">Cancel</a>
+    }
+    @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), UserRoles.DRIVER) && Model.Shipment.ShipmentState == ShipmentState.ReadyToStartDelivery || Model.Shipment.ShipmentState == ShipmentState.ReadyToStartPickup) {
+        <a asp-action="Start" asp-route-id="@Model.Shipment.ShipmentId">Start</a>
+    }
+    @if (Model.Shipment.ShipmentState == ShipmentState.InDelivery || Model.Shipment.ShipmentState == ShipmentState.InPickup) {
+        <a asp-action="End" asp-route-id="@Model.Shipment.ShipmentId">End</a>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+<script>
+    var directionsDisplay;
+    var map;
+
+    function initMap() {
+        directionsDisplay = new google.maps.DirectionsRenderer();
+        var directionsService = new google.maps.DirectionsService();
+
+        // Create a map object and specify the DOM element for display.
+        map = new google.maps.Map(document.getElementById('map-canvas'), {
+            center: { lat: 54.929588, lng: 23.931648},
+            scrollwheel: false,
+            zoom: 8
+        });
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById('directionsPanel'));
+
+        directionsService.route(@Html.Raw(@Model.DirectionsRequest), function (result, status) {
+            if (status == 'OK') {
+                directionsDisplay.setDirections(result);
+            }
+        });
+    }
+
+</script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBI4Wp8uObgOkkHoBd2k4K6s8VEiY3zeKc&callback=initMap"
+        async defer></script>

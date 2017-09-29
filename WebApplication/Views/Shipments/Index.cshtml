@@ -1,0 +1,75 @@
+@using PackageDelivery.Domain.Entities
+@using PackageDelivery.WebApplication.Base
+@model IEnumerable<PackageDelivery.Domain.Entities.Shipment>
+@inject UserManager<User> UserManager
+
+@{
+    ViewData["Title"] = "Pickup Shipments";
+}
+
+<h2>Shipments</h2>
+@if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), UserRoles.MANAGER)) {
+    <p>
+        <a asp-action="Create">Create New</a>
+    </p>
+}
+@if (@TempData["InfoMessage"] != null) {
+    <div class="alert alert-info">
+        @TempData["InfoMessage"]
+    </div>
+}
+<table class="table">
+    <thead>
+        <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ShipmentState)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.CreationDate)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FinishDate)
+                </th>
+            <th>
+                Driver
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Vehicle)
+            </th>
+            <th>
+                Orders Count
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ShipmentState)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CreationDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FinishDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.User.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vehicle.PlateNumber)
+            </td>
+            <td>
+                @(@item.IsPickUp() ? item.PickUpOrders.Count : item.DeliveryOrders.Count)
+            </td>
+            <td>
+                <a asp-action="Details" asp-route-id="@item.ShipmentId">Details</a> |
+                @if (await UserManager.IsInRoleAsync(await UserManager.GetUserAsync(User), UserRoles.MANAGER)) {
+                    <a asp-action="Delete" asp-route-id="@item.ShipmentId">Delete</a>
+                }
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
