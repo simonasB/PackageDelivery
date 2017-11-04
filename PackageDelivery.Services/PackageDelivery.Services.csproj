@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp1.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="10.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PackageDelivery.Core\PackageDelivery.Core.csproj" />
+    <ProjectReference Include="..\PackageDelivery.Data\PackageDelivery.Data.csproj" />
+    <ProjectReference Include="..\PackageDelivery.Domain\PackageDelivery.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

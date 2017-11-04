@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PackageDelivery.Data.Migrations
+namespace PackageDelivery.WebApplication.Data.Migrations
 {
     public partial class Identity : Migration
     {

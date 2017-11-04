@@ -26,7 +26,7 @@ namespace PackageDelivery.WebApplication.Controllers
 
         public async Task<IActionResult> Index() {
             var user = await _userManager.GetUserAsync(HttpContext.User);
-
+            
             var packageDeliveryContext = _context.Shipments
                 .Where(o => o.UserId == user.Id &&
                 o.ShipmentState != ShipmentState.WaitingForManagerApprovalToStartDelivery &&

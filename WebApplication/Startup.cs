@@ -12,6 +12,7 @@ using PackageDelivery.SharedKernel.Data;
 using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Services;
 using PackageDelivery.WebApplication.Services.Maps;
+using Swashbuckle.AspNetCore.Swagger;
 
 namespace PackageDelivery.WebApplication
 {
@@ -62,9 +63,11 @@ namespace PackageDelivery.WebApplication
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
             });
 
-            // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
-            services.AddTransient<ISmsSender, AuthMessageSender>();
+            services.AddSwaggerGen(c =>
+            {
+                c.SwaggerDoc("v1", new Info { Title = "Package Delivery API" });
+                c.SwaggerDoc("v2", new Info { Title = "My API - V2"});
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -73,11 +76,19 @@ namespace PackageDelivery.WebApplication
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
+            app.UseIdentityServerAuthentication(new IdentityServerAuthenticationOptions {
+                RequireHttpsMetadata = false,
+                Authority = "http://localhost:59418",
+                ApiName = "packagedelivery"
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
                 app.UseBrowserLink();
+                app.UseCors(builder =>
+                    builder.AllowAnyHeader().AllowAnyOrigin().AllowAnyMethod());
             }
             else
             {
@@ -86,7 +97,7 @@ namespace PackageDelivery.WebApplication
 
             app.UseStaticFiles();
 
-            app.UseIdentity();
+            //app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -96,8 +107,14 @@ namespace PackageDelivery.WebApplication
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+            app.UseSwagger();
 
-            seeder.Seed().Wait();
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
+            });
+
+            //seeder.Seed().Wait();
             //identitySeeder.Seed().Wait();
         }
     }

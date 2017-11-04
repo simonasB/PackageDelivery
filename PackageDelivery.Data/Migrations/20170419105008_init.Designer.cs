@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using PackageDelivery.Data;
-using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.Data.Migrations
+namespace PackageDelivery.WebApplication.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
     [Migration("20170419105008_init")]
