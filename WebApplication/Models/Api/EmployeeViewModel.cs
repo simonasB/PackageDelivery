@@ -1,9 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PackageDelivery.WebApplication.Models.AccountViewModels
-{
-    public class RegisterViewModel
-    {
+namespace PackageDelivery.WebApplication.Models.Api {
+    public class EmployeeViewModel {
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
@@ -15,9 +13,9 @@ namespace PackageDelivery.WebApplication.Models.AccountViewModels
         [Display(Name = "Password")]
         public string Password { get; set; }
 
-        [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
-        public string ConfirmPassword { get; set; }
+        public bool IsAdmin { get; set; }
+        public bool IsManager { get; set; }
+        public bool IsDriver { get; set; }
+        public int CompanyId { get; set; }
     }
 }

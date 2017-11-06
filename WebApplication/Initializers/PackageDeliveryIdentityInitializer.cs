@@ -38,7 +38,7 @@ namespace PackageDelivery.WebApplication.Data {
                 };
 
                 var userResult = await _userMgr.CreateAsync(user, "P@assw0rd!");
-                var roleResult = await _userMgr.AddToRoleAsync(user, "Admin");
+                var roleResult = await _userMgr.AddToRoleAsync(user, "Admin");                
                 var claimResult = await _userMgr.AddClaimAsync(user, new Claim("SuperUser", "True"));
 
                 if (!userResult.Succeeded || !roleResult.Succeeded || !claimResult.Succeeded) {

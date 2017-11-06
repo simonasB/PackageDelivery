@@ -1,64 +1,75 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PackageDelivery.Domain.Entities;
+using PackageDelivery.WebApplication.Authorization;
 using PackageDelivery.WebApplication.Data;
+using PackageDelivery.WebApplication.Filters;
+using PackageDelivery.WebApplication.Models.Api;
 
 namespace PackageDelivery.WebApplication.ApiControllers
 {
     [Produces("application/json")]
     [Route("api/VehicleMakes/{vehicleMakeId}/VehicleModels")]
+    [ValidateModel]
     public class VehicleModelsController : Controller
     {
         private readonly PackageDeliveryContext _context;
+        private readonly IMapper _mapper;
 
-        public VehicleModelsController(PackageDeliveryContext context)
-        {
+        public VehicleModelsController(PackageDeliveryContext context, IMapper mapper) {
             _context = context;
+            _mapper = mapper;
         }
 
         // GET: api/VehicleModels
         [HttpGet]
-        public IEnumerable<VehicleModel> GetVehicleModels([FromRoute] int vehicleMakeId)
+        [Authorize]
+        public IActionResult GetVehicleModels([FromRoute] int vehicleMakeId)
         {
-            return _context.VehicleModels;
+            return Ok(_mapper.Map<IEnumerable<VehicleModelViewModel>>(_context.VehicleModels.Include(o => o.VehicleMake)));
         }
 
         // GET: api/VehicleModels/5
         [HttpGet("{vehicleModelId}")]
-        public async Task<IActionResult> GetVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var vehicleModel = await EntityFrameworkQueryableExtensions.SingleOrDefaultAsync<VehicleModel>(_context.VehicleModels, m => m.VehicleModelId == vehicleModelId);
+        [Authorize]
+        public async Task<IActionResult> GetVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId) {
+            var vehicleModel = await _context.VehicleModels.Include(o => o.VehicleMake)
+                .SingleOrDefaultAsync(m =>
+                    m.VehicleModelId == vehicleModelId && m.VehicleMake.VehicleMakeId == vehicleMakeId);
 
             if (vehicleModel == null)
             {
                 return NotFound();
             }
 
-            return Ok(vehicleModel);
+            return Ok(_mapper.Map<VehicleModelViewModel>(vehicleModel));
         }
 
         // PUT: api/VehicleModels/5
         [HttpPut("{vehicleModelId}")]
-        public async Task<IActionResult> PutVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId, [FromBody] VehicleModel vehicleModel)
+        [Authorize(Policy = Policy.SuperAdmin)]
+        public async Task<IActionResult> PutVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId, [FromBody] VehicleModelViewModel vehicleModelViewModel)
         {
-            return Ok();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            if (vehicleModelId != vehicleModel.VehicleModelId)
-            {
+            if (vehicleMakeId != vehicleModelViewModel.VehicleMakeId) {
                 return BadRequest();
             }
+
+            if (vehicleModelId != vehicleModelViewModel.VehicleModelId) {
+                return BadRequest();
+            }
+
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
+
+            if (vehicleMake == null) {
+                return NotFound();
+            }
+
+            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
 
             _context.Entry(vehicleModel).State = EntityState.Modified;
 
@@ -68,7 +79,7 @@ namespace PackageDelivery.WebApplication.ApiControllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!VehicleModelExists(vehicleModelId))
+                if (!VehicleModelExists(vehicleModelId, vehicleMakeId))
                 {
                     return NotFound();
                 }
@@ -83,30 +94,34 @@ namespace PackageDelivery.WebApplication.ApiControllers
 
         // POST: api/VehicleModels
         [HttpPost]
-        public async Task<IActionResult> PostVehicleModel([FromRoute] int vehicleMakeId, [FromBody] VehicleModel vehicleModel)
-        {
-            return Ok();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
+        [Authorize(Policy = Policy.SuperAdmin)]
+        public async Task<IActionResult> PostVehicleModel([FromRoute] int vehicleMakeId, [FromBody] VehicleModelViewModel vehicleModelViewModel) {
+            if (vehicleMakeId != vehicleModelViewModel.VehicleMakeId) {
+                return BadRequest();
             }
+
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
+
+            if (vehicleMake == null) {
+                return NotFound();
+            }
+
+            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
 
             _context.VehicleModels.Add(vehicleModel);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetVehicleModel", new { id = vehicleModel.VehicleModelId }, vehicleModel);
+            vehicleModelViewModel.VehicleModelId = vehicleModel.VehicleModelId;
+            return CreatedAtAction("GetVehicleModel", new { id = vehicleModelViewModel.VehicleModelId }, vehicleModelViewModel);
         }
 
         // DELETE: api/VehicleModels/5
         [HttpDelete("{vehicleModelId}")]
+        [Authorize(Policy = Policy.SuperAdmin)]
         public async Task<IActionResult> DeleteVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId) {
-            return Ok();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var vehicleModel = await EntityFrameworkQueryableExtensions.SingleOrDefaultAsync<VehicleModel>(_context.VehicleModels, m => m.VehicleModelId == vehicleModelId);
+            var vehicleModel = await _context.VehicleModels.Include(o => o.VehicleMake)
+                .SingleOrDefaultAsync(m =>
+                    m.VehicleModelId == vehicleModelId && m.VehicleMake.VehicleMakeId == vehicleMakeId);
             if (vehicleModel == null)
             {
                 return NotFound();
@@ -115,12 +130,13 @@ namespace PackageDelivery.WebApplication.ApiControllers
             _context.VehicleModels.Remove(vehicleModel);
             await _context.SaveChangesAsync();
 
-            return Ok(vehicleModel);
+            return Ok(_mapper.Map<VehicleModelViewModel>(vehicleModel));
         }
 
-        private bool VehicleModelExists(int id)
+        private bool VehicleModelExists(int vehicleModelId, int vehicleMakeId)
         {
-            return Queryable.Any<VehicleModel>(_context.VehicleModels, e => e.VehicleModelId == id);
+            return _context.VehicleModels.Include(o => o.VehicleMake).Any(m =>
+                m.VehicleModelId == vehicleModelId && m.VehicleMake.VehicleMakeId == vehicleMakeId);
         }
     }
 }

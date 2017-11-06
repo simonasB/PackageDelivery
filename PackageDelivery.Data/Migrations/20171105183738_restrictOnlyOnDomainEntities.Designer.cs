@@ -9,9 +9,10 @@ using PackageDelivery.Domain.Entities;
 namespace PackageDelivery.WebApplication.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
-    partial class PackageDeliveryContextModelSnapshot : ModelSnapshot
+    [Migration("20171105183738_restrictOnlyOnDomainEntities")]
+    partial class restrictOnlyOnDomainEntities
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")
@@ -646,13 +647,11 @@ namespace PackageDelivery.WebApplication.Data.Migrations
                 {
                     b.HasOne("PackageDelivery.Domain.Entities.Company", "Company")
                         .WithMany()
-                        .HasForeignKey("CompanyId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("CompanyId");
 
                     b.HasOne("PackageDelivery.Domain.Entities.PickUpPoint", "PickUpPoint")
                         .WithMany("Users")
-                        .HasForeignKey("PickUpPointId")
-                        .OnDelete(DeleteBehavior.SetNull);
+                        .HasForeignKey("PickUpPointId");
                 });
 
             modelBuilder.Entity("PackageDelivery.Domain.Entities.Vehicle", b =>

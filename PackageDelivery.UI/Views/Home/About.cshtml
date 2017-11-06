@@ -8,6 +8,10 @@
     <strong>access_token</strong>
     <span>@await ViewContext.HttpContext.Authentication.GetTokenAsync("access_token")</span>
 </div>
+<div>
+    <strong>access_token</strong>
+    <span>@await ViewContext.HttpContext.Authentication.GetTokenAsync("refresh_token")</span>
+</div>
 
 @foreach (var claim in User.Claims) {
     <div>

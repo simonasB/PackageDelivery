@@ -9,9 +9,10 @@ using PackageDelivery.Domain.Entities;
 namespace PackageDelivery.WebApplication.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
-    partial class PackageDeliveryContextModelSnapshot : ModelSnapshot
+    [Migration("20171105213701_UserFKSetNullOnDelete")]
+    partial class UserFKSetNullOnDelete
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
             modelBuilder
                 .HasAnnotation("ProductVersion", "1.1.1")

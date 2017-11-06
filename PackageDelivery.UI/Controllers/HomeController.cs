@@ -19,10 +19,6 @@ namespace PackageDelivery.UI.Controllers
             return View();
         }
 
-        public async Task<ActionResult> Shouts() {
-            return null;
-        }
-
         public async Task Logout() {
             await HttpContext.Authentication.SignOutAsync("Cookies");
             await HttpContext.Authentication.SignOutAsync("oidc");

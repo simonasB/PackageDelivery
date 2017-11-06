@@ -5,7 +5,9 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 using PackageDelivery.Domain.Entities;
+using PackageDelivery.WebApplication.Authorization;
 using PackageDelivery.WebApplication.Base;
 using PackageDelivery.WebApplication.Services.Maps;
 
@@ -23,12 +25,28 @@ namespace PackageDelivery.WebApplication.Data {
             _distanceCalculator = distanceCalculator;
         }
 
+        public async Task CustomSeed() {
+            var userManager = new User {
+                UserName = "super@admin.com",
+                FirstName = "super",
+                LastName = "admin",
+                Email = "super@admin.com",
+                IsActive = true,
+                EmailConfirmed = true,
+                PhoneNumberConfirmed = true,
+                LockoutEnabled = false
+            };
+
+            var resultUsr = await _userMgr.CreateAsync(userManager, "P@assw0rd!");
+            var resultRole = await _userMgr.AddClaimAsync(userManager, new Claim(Claims.Role, UserRoles.SUPER_ADMIN));
+        }
+
         public async Task Seed() {
             #region Common
 
             if (true) {
                 _ctx.Database.EnsureDeleted();
-                _ctx.Database.EnsureCreated();
+                _ctx.Database.Migrate();
                 var country = new Country {
                     Name = "Lithuania",
                     RegistrationDate = DateTime.UtcNow
@@ -1118,16 +1136,6 @@ namespace PackageDelivery.WebApplication.Data {
 
                 #region Users
 
-                var roleManager = new IdentityRole(UserRoles.MANAGER);
-                //role.Claims.Add(new IdentityRoleClaim<string>() { ClaimType = "IsAdmin", ClaimValue = "True" });
-                await _roleMgr.CreateAsync(roleManager);
-
-                var roleDriver = new IdentityRole(UserRoles.DRIVER);
-                await _roleMgr.CreateAsync(roleDriver);
-
-                var roleCustomer = new IdentityRole(UserRoles.CUSTOMER);
-                await _roleMgr.CreateAsync(roleCustomer);
-
                 var userCustomer = new User {
                     UserName = "a@b.com",
                     FirstName = "a",
@@ -1140,7 +1148,7 @@ namespace PackageDelivery.WebApplication.Data {
                 };
 
                 var userResult = await _userMgr.CreateAsync(userCustomer, "P@assw0rd!");
-                var roleResult = await _userMgr.AddToRoleAsync(userCustomer, UserRoles.CUSTOMER);
+                var roleResult = await _userMgr.AddClaimAsync(userCustomer, new Claim(Claims.Role, UserRoles.CUSTOMER));
                 //var claimResult = await _userMgr.AddClaimAsync(userCustomer, new Claim("SuperUser", "True"));
 
                 var driverCKaunasUserNames = new[]
@@ -1161,7 +1169,7 @@ namespace PackageDelivery.WebApplication.Data {
                     };
 
                     await _userMgr.CreateAsync(userDriver, "P@assw0rd!");
-                    await _userMgr.AddToRoleAsync(userDriver, UserRoles.DRIVER);
+                    await _userMgr.AddClaimAsync(userDriver, new Claim(Claims.Role, UserRoles.DRIVER));
                 }
 
                 var userManager = new User {
@@ -1174,11 +1182,46 @@ namespace PackageDelivery.WebApplication.Data {
                     PhoneNumberConfirmed = true,
                     LockoutEnabled = false,
                     CompanyId = _ctx.Companies.Single(o => o.Name == companyCheap.Name).CompanyId,
-                    PickUpPointId = _ctx.PickUpPoints.Single(o => o.Name == pickUpPointCKaunas.Name).PickUpPointId
+                    PickUpPointId = _ctx.PickUpPoints.Single(o => o.Name == pickUpPointCKaunas.Name).PickUpPointId,
                 };
 
                 var resultUsr = await _userMgr.CreateAsync(userManager, "P@assw0rd!");
-                var resultRole = await _userMgr.AddToRoleAsync(userManager, UserRoles.MANAGER);
+                var resultRole = await _userMgr.AddClaimAsync(userManager, new Claim(Claims.Role, UserRoles.MANAGER));
+
+                var userManagerWithClaims = new User
+                {
+                    UserName = "managerCKaunas@withclaims.com",
+                    FirstName = "aawithclaims",
+                    LastName = "bbwithclaims",
+                    Email = "managerCKaunas@withclaims.com",
+                    IsActive = true,
+                    EmailConfirmed = true,
+                    PhoneNumberConfirmed = true,
+                    LockoutEnabled = false,
+                    CompanyId = 1,
+                    PickUpPointId = 1
+                };
+
+                userManagerWithClaims.Claims.Add(new IdentityUserClaim<string>
+                {
+                    ClaimType = nameof(User.CompanyId),
+                    ClaimValue = userManager.CompanyId.ToString()
+                });
+
+                userManagerWithClaims.Claims.Add(new IdentityUserClaim<string>
+                {
+                    ClaimType = nameof(User.PickUpPointId),
+                    ClaimValue = userManager.PickUpPointId.ToString()
+                });
+
+                userManagerWithClaims.Claims.Add(new IdentityUserClaim<string>
+                {
+                    ClaimType = "email",
+                    ClaimValue = userManager.Email
+                });
+
+                await _userMgr.CreateAsync(userManagerWithClaims, "P@assw0rd!");
+                await _userMgr.AddClaimAsync(userManagerWithClaims, new Claim(Claims.Role, UserRoles.MANAGER));
 
                 #endregion
             }

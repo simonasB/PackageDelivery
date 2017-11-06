@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
@@ -22,13 +23,43 @@ namespace PackageDelivery.WebApplication.Data {
 
         protected override void OnModelCreating(ModelBuilder modelBuilder) {
             //modelBuilder.Entity<Payment>()
-               // .Property(o => o.Order).IsRequired();
+            // .Property(o => o.Order).IsRequired();
 
             //modelBuilder.Entity<Order>()
-                //.Property(o => o.Payment).IsRequired();
-            foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
-                relationship.DeleteBehavior = DeleteBehavior.Restrict;
+            //.Property(o => o.Payment).IsRequired();
+
+            /*foreach (var relationship in modelBuilder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys())) {
+                relationship.DeleteBehavior = DeleteBehavior.Cascade;
+            }*/
+
+            var entities = new List<string> {
+                typeof(Address).FullName,
+                typeof(Company).FullName,
+                typeof(Country).FullName,
+                typeof(Currency).FullName,
+                typeof(Item).FullName,
+                typeof(Order).FullName,
+                typeof(Payment).FullName,
+                typeof(PaymentMethod).FullName,
+                typeof(PickUpPoint).FullName,
+                typeof(Shipment).FullName,
+                typeof(Vehicle).FullName,
+                typeof(VehicleMake).FullName,
+                typeof(VehicleModel).FullName
+            };
+
+            entities.ForEach(entity => {
+                foreach (var relationship in modelBuilder.Model.FindEntityType(entity)
+                    .GetForeignKeys()) {
+                    relationship.DeleteBehavior = DeleteBehavior.Restrict;
+                }
+            });
+
+            foreach (var relationship in modelBuilder.Model.FindEntityType(typeof(User).FullName)
+                .GetForeignKeys()) {
+                relationship.DeleteBehavior = DeleteBehavior.SetNull;
             }
+
             base.OnModelCreating(modelBuilder);
         }
 

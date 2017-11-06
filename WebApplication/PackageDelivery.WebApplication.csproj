@@ -12,6 +12,7 @@
     <UserSecretsId>aspnet-WebApplication-2be8aa39-2e32-4a45-a7bd-033532d1cb19</UserSecretsId>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="2.0.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="1.2.0" />
     <PackageReference Include="Microsoft.ApplicationInsights.AspNetCore" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore" Version="1.1.1" />

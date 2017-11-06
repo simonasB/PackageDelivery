@@ -1,40 +1,41 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PackageDelivery.Domain.Entities;
+using PackageDelivery.WebApplication.Authorization;
+using PackageDelivery.WebApplication.Base;
 using PackageDelivery.WebApplication.Data;
+using PackageDelivery.WebApplication.Filters;
 
 namespace PackageDelivery.WebApplication.ApiControllers
 {
     [Produces("application/json")]
     [Route("api/Companies/{companyId}/Vehicles")]
+    [Authorize(Policy = Policy.CompanyMember)]
+    [ValidateModel]
     public class VehiclesController : Controller
     {
         private readonly PackageDeliveryContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public VehiclesController(PackageDeliveryContext context)
-        {
+        public VehiclesController(PackageDeliveryContext context, IAuthorizationService authorizationService) {
             _context = context;
+            _authorizationService = authorizationService;
         }
 
         // GET: api/Vehicles
-        [HttpGet]
-        public IEnumerable<Vehicle> GetVehicles([FromRoute] int companyId)
-        {
-            return _context.Vehicles;
+        [HttpGet]     
+        public IEnumerable<Vehicle> GetVehicles([FromRoute] int companyId) {
+            return _context.Vehicles.Where(o => o.CompanyId == companyId);
         }
 
         // GET: api/Vehicles/5
         [HttpGet("{vehicleId}")]
         public async Task<IActionResult> GetVehicle([FromRoute] int companyId, [FromRoute] int vehicleId)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var vehicle = await _context.Vehicles.SingleOrDefaultAsync(m => m.VehicleId == vehicleId);
 
             if (vehicle == null)
@@ -42,18 +43,19 @@ namespace PackageDelivery.WebApplication.ApiControllers
                 return NotFound();
             }
 
+            var isAuthorized = await _authorizationService.AuthorizeAsync(User, vehicle, Operations.Read);
+
+            if (!isAuthorized) {
+                return Unauthorized();
+            }
+
             return Ok(vehicle);
         }
 
         // PUT: api/Vehicles/5
         [HttpPut("{vehicleId}")]
+        [Authorize(Policy = Policy.Admin)]
         public async Task<IActionResult> PutVehicle([FromRoute] int companyId, [FromRoute] int vehicleId, [FromBody] Vehicle vehicle) {
-            return Ok();
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             if (vehicleId != vehicle.VehicleId)
             {
                 return BadRequest();
@@ -82,8 +84,8 @@ namespace PackageDelivery.WebApplication.ApiControllers
 
         // POST: api/Vehicles
         [HttpPost]
+        [Authorize(Policy = Policy.Admin)]
         public async Task<IActionResult> PostVehicle([FromRoute] int companyId, [FromBody] Vehicle vehicle) {
-            return Ok();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -97,8 +99,8 @@ namespace PackageDelivery.WebApplication.ApiControllers
 
         // DELETE: api/Vehicles/5
         [HttpDelete("{vehicleId}")]
+        [Authorize(Policy = Policy.Admin)]
         public async Task<IActionResult> DeleteVehicle([FromRoute] int companyId, [FromRoute] int vehicleId) {
-            return Ok();
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);

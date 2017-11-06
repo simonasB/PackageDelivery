@@ -60,7 +60,7 @@ namespace PackageDelivery.UI
                 ResponseType = "id_token code",
                 Scope = { "packagedelivery", "offline_access", "email" },
                 GetClaimsFromUserInfoEndpoint = true,
-                SaveTokens = true
+                SaveTokens = true,
             });
 
             app.UseStaticFiles();

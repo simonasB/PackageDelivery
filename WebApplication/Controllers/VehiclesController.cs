@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +9,15 @@ using PackageDelivery.WebApplication.Data;
 
 namespace PackageDelivery.WebApplication.Controllers
 {
+    [Authorize]
     public class VehiclesController : Controller
     {
         private readonly PackageDeliveryContext _context;
+        private readonly IAuthorizationService _authorizationService;
 
-        public VehiclesController(PackageDeliveryContext context)
-        {
-            _context = context;    
+        public VehiclesController(PackageDeliveryContext context, IAuthorizationService authorizationService) {
+            _context = context;
+            _authorizationService = authorizationService;
         }
 
         // GET: Vehicles

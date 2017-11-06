@@ -51,7 +51,8 @@ namespace PackageDelivery.OAuth
                 .AddConfigurationStore(builder => builder.UseSqlServer(Configuration.GetConnectionString("SqlDb"),
                     options => options.MigrationsAssembly(assembly)))
                 .AddOperationalStore(builder => builder.UseSqlServer(Configuration.GetConnectionString("SqlDb"),
-                    options => options.MigrationsAssembly(assembly)));
+                    options => options.MigrationsAssembly(assembly)))
+                .AddProfileService<IdentityProfileService>();
 
             services.AddMvc();
         }

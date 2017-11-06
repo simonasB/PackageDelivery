@@ -1,7 +1,10 @@
 ﻿using System.Net.Http;
+using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -9,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.SharedKernel.Data;
+using PackageDelivery.WebApplication.Authorization;
+using PackageDelivery.WebApplication.Base;
 using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Services;
 using PackageDelivery.WebApplication.Services.Maps;
@@ -58,6 +63,34 @@ namespace PackageDelivery.WebApplication
             services.AddTransient<IMapsGeneratorService, GoogleMapsGeneratorService>();
             services.AddTransient<IShipmentManagementProvider, OptimalShipmentManagementProvider>();
 
+            // Authorization handlers
+            services.AddSingleton<IAuthorizationHandler,
+                VehicleAuthorizationHandler>();
+            services.AddSingleton<IActionContextAccessor, ActionContextAccessor>();
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policy.CompanyMember,
+                    policy => policy.Requirements.Add(new CompanyMemberRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, CompanyMemberHandler>();
+            services.AddAuthorization(options => {
+                options.AddPolicy(Policy.AccountOwner,
+                    policy => policy.Requirements.Add(new AccountOwnerRequirement()));
+            });
+            services.AddSingleton<IAuthorizationHandler, AccountOwnerHandler>();
+
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy(Policy.Admin, policy =>
+                    policy.RequireClaim(Claims.Role, UserRoles.ADMIN));
+                options.AddPolicy(Policy.SuperAdmin, policy =>
+                    policy.RequireClaim(Claims.Role, UserRoles.SUPER_ADMIN));
+                options.AddPolicy(Policy.Driver, policy =>
+                    policy.RequireClaim(Claims.Role, UserRoles.DRIVER));
+                options.AddPolicy(Policy.Manager, policy =>
+                    policy.RequireClaim(Claims.Role, UserRoles.MANAGER));
+            });
+
             services.AddMvc().AddJsonOptions(options =>
             {
                 options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore;
@@ -68,6 +101,8 @@ namespace PackageDelivery.WebApplication
                 c.SwaggerDoc("v1", new Info { Title = "Package Delivery API" });
                 c.SwaggerDoc("v2", new Info { Title = "My API - V2"});
             });
+
+            services.AddAutoMapper();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -96,7 +131,7 @@ namespace PackageDelivery.WebApplication
             }
 
             app.UseStaticFiles();
-
+            
             //app.UseIdentity();
 
             // Add external authentication middleware below. To configure them please see https://go.microsoft.com/fwlink/?LinkID=532715
@@ -114,7 +149,7 @@ namespace PackageDelivery.WebApplication
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
             });
 
-            //seeder.Seed().Wait();
+            //seeder.CustomSeed().Wait();
             //identitySeeder.Seed().Wait();
         }
     }

@@ -74,7 +74,7 @@ namespace IdentityServer4.Quickstart.UI
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Username);
-
+                
                 // validate username/password against in-memory store
                 if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
                 {

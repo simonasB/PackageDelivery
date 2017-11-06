@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageDelivery.UI", "Packa
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageDelivery.Data", "PackageDelivery.Data\PackageDelivery.Data.csproj", "{2C09BC32-4662-434F-94CF-99906AE9430B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageDelivery.Services", "PackageDelivery.Services\PackageDelivery.Services.csproj", "{9122BAD7-4AAD-4A38-8F90-18B00A7097E5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageDelivery.Services", "PackageDelivery.Services\PackageDelivery.Services.csproj", "{9122BAD7-4AAD-4A38-8F90-18B00A7097E5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PackageDelivery.Core", "PackageDelivery.Core\PackageDelivery.Core.csproj", "{438B5174-17C9-468D-9FD5-B8C76ECC8592}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PackageDelivery.Core", "PackageDelivery.Core\PackageDelivery.Core.csproj", "{438B5174-17C9-468D-9FD5-B8C76ECC8592}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
