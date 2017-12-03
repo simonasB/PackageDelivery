@@ -2,8 +2,9 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using PackageDelivery.Core;
+using PackageDelivery.Domain.Dtos;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Base;
 using PackageDelivery.WebApplication.Filters;
 using PackageDelivery.WebApplication.Models;
 using PackageDelivery.WebApplication.Models.AccountViewModels;

@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Responses;
+using PackageDelivery.Services.Maps.Google.Common.Components;
+using PackageDelivery.Services.Maps.Google.Common.Responses;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.DistanceMatrix
+namespace PackageDelivery.Services.Maps.Google.DistanceMatrix
 {
     /// <summary>
     /// Row element component

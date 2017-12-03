@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Directions.Components
+namespace PackageDelivery.Services.Maps.Google.Directions.Components
 {
 
     /// <summary>

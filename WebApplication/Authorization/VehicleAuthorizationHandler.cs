@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Authorization.Infrastructure;
+using PackageDelivery.Core;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Base;
 
 namespace PackageDelivery.WebApplication.Authorization
 {

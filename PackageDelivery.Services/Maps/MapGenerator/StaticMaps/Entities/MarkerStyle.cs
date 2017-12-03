@@ -1,6 +1,6 @@
-using GoogleMapsApi.StaticMaps.Enums;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Enums;
 
-namespace GoogleMapsApi.StaticMaps.Entities
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities
 {
 	public class MarkerStyle
 	{

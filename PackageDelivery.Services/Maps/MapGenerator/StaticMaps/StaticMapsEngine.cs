@@ -1,13 +1,11 @@
 using System;
-using System.Linq;
 using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Text;
-using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.StaticMaps.Entities;
-using GoogleMapsApi.StaticMaps.Enums;
+using System.Linq;
+using PackageDelivery.Services.Maps.MapGenerator.Common;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Enums;
 
-namespace GoogleMapsApi.StaticMaps
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps
 {
 	/// <summary>
 	/// Creates a URL to google's static map according to propery filled up StaticMapsRequest

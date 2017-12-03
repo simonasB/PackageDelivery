@@ -3,9 +3,6 @@ using System.Net.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Services;
-using PackageDelivery.WebApplication.Services.Maps;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Responses;
 
 namespace PackageDelivery.WebApplication.Controllers
 {

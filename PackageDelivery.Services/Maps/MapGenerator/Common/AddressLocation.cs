@@ -1,6 +1,4 @@
-using System;
-
-namespace GoogleMapsApi.Entities.Common
+namespace PackageDelivery.Services.Maps.MapGenerator.Common
 {
 	public class AddressLocation : ILocationString
 	{

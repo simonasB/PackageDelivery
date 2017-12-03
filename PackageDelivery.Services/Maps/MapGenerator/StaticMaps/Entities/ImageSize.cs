@@ -1,4 +1,4 @@
-namespace GoogleMapsApi.StaticMaps.Entities
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities
 {
 	/// <summary>
 	/// Images may be retrieved in sizes up to 640 by 640 pixels. The size parameter takes a string with two values separated by the x character. 640x640 is the largest image size allowed. Note that the center parameter, combined with the size parameter implicitly defines the coverage area of the map image.

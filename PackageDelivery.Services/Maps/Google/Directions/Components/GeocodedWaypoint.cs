@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Enums;
+using PackageDelivery.Services.Maps.Google.Directions.Enums;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Directions.Components
+namespace PackageDelivery.Services.Maps.Google.Directions.Components
 {
 
     /// <summary>

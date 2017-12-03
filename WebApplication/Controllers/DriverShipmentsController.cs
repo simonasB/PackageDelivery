@@ -7,9 +7,9 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using PackageDelivery.Core;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Base;
-using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Models;
 
 namespace PackageDelivery.WebApplication.Controllers

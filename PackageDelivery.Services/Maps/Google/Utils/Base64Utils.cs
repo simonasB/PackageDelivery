@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-namespace PackageDelivery.WebApplication.Utils
+namespace PackageDelivery.Services.Maps.Google.Utils
 {
 
     /// <summary>

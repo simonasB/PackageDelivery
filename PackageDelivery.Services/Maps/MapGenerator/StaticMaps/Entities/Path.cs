@@ -1,7 +1,7 @@
 using System.Collections.Generic;
-using GoogleMapsApi.Entities.Common;
+using PackageDelivery.Services.Maps.MapGenerator.Common;
 
-namespace GoogleMapsApi.StaticMaps.Entities
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities
 {
 	public class Path
 	{

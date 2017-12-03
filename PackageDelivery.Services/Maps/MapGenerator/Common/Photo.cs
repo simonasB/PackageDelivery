@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace GoogleMapsApi.Entities.Common
+namespace PackageDelivery.Services.Maps.MapGenerator.Common
 {
     /// <summary>
     /// Place Photo.

@@ -5,8 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Data;
 
 namespace PackageDelivery.WebApplication.Controllers
 {

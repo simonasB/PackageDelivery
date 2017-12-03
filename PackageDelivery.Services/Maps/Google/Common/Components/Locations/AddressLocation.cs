@@ -1,8 +1,8 @@
 ﻿using System.Runtime.Serialization;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Common;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Interfaces;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations.Common;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations.Interfaces;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations
+namespace PackageDelivery.Services.Maps.Google.Common.Components.Locations
 {
     /// <summary>
     /// Address location

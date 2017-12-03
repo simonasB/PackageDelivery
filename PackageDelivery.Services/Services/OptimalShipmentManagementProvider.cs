@@ -2,11 +2,11 @@
 using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Core;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Base;
-using PackageDelivery.WebApplication.Data;
 
-namespace PackageDelivery.WebApplication.Services
+namespace PackageDelivery.Services.Services
 {
     public class OptimalShipmentManagementProvider : IShipmentManagementProvider
     {

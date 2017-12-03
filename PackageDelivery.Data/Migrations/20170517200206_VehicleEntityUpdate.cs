@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PackageDelivery.WebApplication.Data.Migrations
+namespace PackageDelivery.Data.Migrations
 {
     public partial class VehicleEntityUpdate : Migration
     {

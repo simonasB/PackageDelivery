@@ -5,11 +5,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Data;
+using PackageDelivery.Domain.Dtos.VehicleMakeDtos;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.WebApplication.Authorization;
-using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Filters;
-using PackageDelivery.WebApplication.Models.Api.VehicleMake;
 
 namespace PackageDelivery.WebApplication.ApiControllers
 {
@@ -30,7 +30,7 @@ namespace PackageDelivery.WebApplication.ApiControllers
         [Authorize]
         public IActionResult GetVehicleMakes()
         {         
-            return Ok(_mapper.Map<IEnumerable<VehicleMakeModel>>(_context.VehicleMakes));
+            return Ok(_mapper.Map<IEnumerable<VehicleMakeDto>>(_context.VehicleMakes));
         }
 
         // GET: api/VehicleMakes/5
@@ -45,19 +45,20 @@ namespace PackageDelivery.WebApplication.ApiControllers
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<VehicleMakeModel>(vehicleMake));
+            return Ok(_mapper.Map<VehicleMakeDto>(vehicleMake));
         }
 
         // PUT: api/VehicleMakes/5
         [HttpPut("{id}")]
         [Authorize(Policy = Policy.SuperAdmin)]
-        public async Task<IActionResult> PutVehicleMake([FromRoute] int id, [FromBody] VehicleMakeModel vehicleMakeModel) {
-            if (id != vehicleMakeModel.VehicleMakeId)
-            {
-                return BadRequest();
+        public async Task<IActionResult> PutVehicleMake([FromRoute] int id, [FromBody] VehicleMakeUpdateDto vehicleMakeDto) {
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == id);
+
+            if (vehicleMake == null) {
+                return NotFound();
             }
 
-            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeModel);
+            _mapper.Map(vehicleMakeDto, vehicleMake);
 
             _context.Entry(vehicleMake).State = EntityState.Modified;
 
@@ -65,16 +66,12 @@ namespace PackageDelivery.WebApplication.ApiControllers
             {
                 await _context.SaveChangesAsync();
             }
-            catch (DbUpdateConcurrencyException)
-            {
+            catch (DbUpdateConcurrencyException) {
                 if (!VehicleMakeExists(id))
                 {
                     return NotFound();
                 }
-                else
-                {
-                    throw;
-                }
+                throw;
             }
 
             return NoContent();
@@ -83,40 +80,28 @@ namespace PackageDelivery.WebApplication.ApiControllers
         // POST: api/VehicleMakes
         [HttpPost]
         [Authorize(Policy = Policy.SuperAdmin)]
-        public async Task<IActionResult> PostVehicleMake([FromBody] VehicleMakeModel vehicleMakeModel) {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeModel);
+        public async Task<IActionResult> PostVehicleMake([FromBody] VehicleMakeCreationDto vehicleMakeDto) {
+            var vehicleMake = _mapper.Map<VehicleMake>(vehicleMakeDto);
 
             _context.VehicleMakes.Add(vehicleMake);
             await _context.SaveChangesAsync();
 
-            vehicleMakeModel.VehicleMakeId = vehicleMake.VehicleMakeId;
-            return CreatedAtAction("GetVehicleMake", new { id = vehicleMake.VehicleMakeId }, vehicleMakeModel);
+            return CreatedAtAction("GetVehicleMake", new { id = vehicleMake.VehicleMakeId }, _mapper.Map<VehicleMakeDto>(vehicleMake));
         }
 
         // DELETE: api/VehicleMakes/5
         [HttpDelete("{id}")]
         [Authorize(Policy = Policy.SuperAdmin)]
         public async Task<IActionResult> DeleteVehicleMake([FromRoute] int id) {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
-            var vehicleMake = await EntityFrameworkQueryableExtensions.SingleOrDefaultAsync<VehicleMake>(_context.VehicleMakes, m => m.VehicleMakeId == id);
-            if (vehicleMake == null)
-            {
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(m => m.VehicleMakeId == id);
+            if (vehicleMake == null) {
                 return NotFound();
             }
 
             _context.VehicleMakes.Remove(vehicleMake);
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<VehicleMakeModel>(vehicleMake));
+            return Ok(_mapper.Map<VehicleMakeDto>(vehicleMake));
         }
 
         private bool VehicleMakeExists(int id)

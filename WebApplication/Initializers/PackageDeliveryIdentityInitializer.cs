@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.WebApplication.Data {
+namespace PackageDelivery.WebApplication.Initializers {
     public class PackageDeliveryIdentityInitializer {
         private readonly RoleManager<IdentityRole> _roleMgr;
         private readonly UserManager<User> _userMgr;

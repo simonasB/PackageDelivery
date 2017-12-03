@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Threading.Tasks;
-using PackageDelivery.Domain.Entities;
-using PackageDelivery.SharedKernel.Data.Maps;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Responses;
-using PackageDelivery.WebApplication.Utils;
+using PackageDelivery.Services.Maps;
+using PackageDelivery.Services.Maps.Google.Directions.Responses;
+using PackageDelivery.Services.Maps.Google.Utils;
 
-namespace PackageDelivery.WebApplication.Services
+namespace PackageDelivery.Services.Services
 {
     public class GoogleRouteCalculator : GoogleServicesBase
     {

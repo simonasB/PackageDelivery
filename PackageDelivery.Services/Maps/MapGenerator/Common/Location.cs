@@ -1,7 +1,7 @@
 using System.Globalization;
 using System.Runtime.Serialization;
 
-namespace GoogleMapsApi.Entities.Common
+namespace PackageDelivery.Services.Maps.MapGenerator.Common
 {
     [DataContract]
 	public class Location : ILocationString

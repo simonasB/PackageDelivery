@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Components;
+using PackageDelivery.Services.Maps.Google.Common.Components;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations;
+using PackageDelivery.Services.Maps.Google.Directions.Components;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Directions.Results
+namespace PackageDelivery.Services.Maps.Google.Directions.Results
 {
 
     /// <summary>

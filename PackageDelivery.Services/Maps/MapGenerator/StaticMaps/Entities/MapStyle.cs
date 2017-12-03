@@ -1,6 +1,6 @@
-using GoogleMapsApi.StaticMaps.Enums;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Enums;
 
-namespace GoogleMapsApi.StaticMaps.Entities
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities
 {
 	/// <summary>
 	/// Styled maps allow you to customize the presentation of the standard Google map styles, changing the visual display of such elements as roads, parks, and built-up areas to reflect a different style than that used in the default map type. These components are known as features and a styled map allows you to select these features and apply visual styles to their display (including hiding them entirely). With these changes, the map can be made to emphasize particular components or complement content within the surrounding page.

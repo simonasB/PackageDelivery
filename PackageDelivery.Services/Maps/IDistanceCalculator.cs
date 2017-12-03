@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using PackageDelivery.Domain.Entities;
-namespace PackageDelivery.WebApplication.Services.Maps {
+
+namespace PackageDelivery.Services.Maps {
     public interface IDistanceCalculator {
         /// <summary>
         /// Returns distance between two address in meters

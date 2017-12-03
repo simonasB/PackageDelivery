@@ -1,7 +1,7 @@
 using System.IO;
 using System.Text;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Responses
+namespace PackageDelivery.Services.Maps.Google.Common.Responses
 {
     /// <summary>
     /// Content text response

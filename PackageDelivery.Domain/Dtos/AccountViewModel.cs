@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace PackageDelivery.WebApplication.Models.Api {
+namespace PackageDelivery.Domain.Dtos {
     public class AccountViewModel {
         [Required]
         [EmailAddress]

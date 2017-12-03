@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations;
-using PackageDelivery.WebApplication.Utils;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations;
+using PackageDelivery.Services.Maps.Google.Utils;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components
+namespace PackageDelivery.Services.Maps.Google.Common.Components
 {
 
     /// <summary>

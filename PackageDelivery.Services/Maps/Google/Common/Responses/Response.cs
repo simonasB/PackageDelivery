@@ -1,6 +1,6 @@
 using System;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Responses
+namespace PackageDelivery.Services.Maps.Google.Common.Responses
 {
     /// <summary>
     /// Response

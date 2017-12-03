@@ -1,6 +1,6 @@
 ﻿using System.Runtime.Serialization;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Directions.Enums
+namespace PackageDelivery.Services.Maps.Google.Directions.Enums
 {
 
     /// <summary>

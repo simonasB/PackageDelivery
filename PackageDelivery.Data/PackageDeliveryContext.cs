@@ -1,11 +1,10 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.WebApplication.Data {
+namespace PackageDelivery.Data {
     public class PackageDeliveryContext : IdentityDbContext<User> {
         public DbSet<VehicleMake> VehicleMakes { get; set; }
         public DbSet<VehicleModel> VehicleModels { get; set; }

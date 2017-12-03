@@ -2,25 +2,25 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
-using IdentityModel;
-using IdentityServer4.Services;
-using IdentityServer4.Stores;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Authentication;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Security.Principal;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
+using IdentityModel;
 using IdentityServer4.Events;
 using IdentityServer4.Extensions;
+using IdentityServer4.Services;
+using IdentityServer4.Stores;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Authentication;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using PackageDelivery.Domain.Entities;
 
-namespace IdentityServer4.Quickstart.UI
+namespace PackageDelivery.OAuth.Quickstart.Account
 {
     /// <summary>
     /// This sample controller implements a typical login/logout/provision workflow for local and external accounts.

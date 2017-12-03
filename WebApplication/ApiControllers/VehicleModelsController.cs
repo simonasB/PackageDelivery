@@ -5,11 +5,11 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Data;
+using PackageDelivery.Domain.Dtos.VehicleModelDtos;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.WebApplication.Authorization;
-using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Filters;
-using PackageDelivery.WebApplication.Models.Api;
 
 namespace PackageDelivery.WebApplication.ApiControllers
 {
@@ -29,47 +29,44 @@ namespace PackageDelivery.WebApplication.ApiControllers
         // GET: api/VehicleModels
         [HttpGet]
         [Authorize]
-        public IActionResult GetVehicleModels([FromRoute] int vehicleMakeId)
-        {
-            return Ok(_mapper.Map<IEnumerable<VehicleModelViewModel>>(_context.VehicleModels.Include(o => o.VehicleMake)));
+        public IActionResult GetVehicleModels([FromRoute] int vehicleMakeId) {
+            return Ok(_mapper.Map<IEnumerable<VehicleModelDto>>(_context.VehicleModels
+                .Where(o => o.VehicleMakeId == vehicleMakeId).Include(o => o.VehicleMake)));
         }
 
         // GET: api/VehicleModels/5
         [HttpGet("{vehicleModelId}")]
         [Authorize]
         public async Task<IActionResult> GetVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId) {
-            var vehicleModel = await _context.VehicleModels.Include(o => o.VehicleMake)
-                .SingleOrDefaultAsync(m =>
-                    m.VehicleModelId == vehicleModelId && m.VehicleMake.VehicleMakeId == vehicleMakeId);
-
-            if (vehicleModel == null)
-            {
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
+            if (vehicleMake == null) {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<VehicleModelViewModel>(vehicleModel));
+            var vehicleModel = await _context.VehicleModels.SingleOrDefaultAsync(o => o.VehicleModelId == vehicleModelId);
+            if (vehicleModel == null) {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<VehicleModelDto>(vehicleModel));
         }
 
         // PUT: api/VehicleModels/5
         [HttpPut("{vehicleModelId}")]
         [Authorize(Policy = Policy.SuperAdmin)]
-        public async Task<IActionResult> PutVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId, [FromBody] VehicleModelViewModel vehicleModelViewModel)
+        public async Task<IActionResult> PutVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId, [FromBody] VehicleModelUpdateDto vehicleModelDto)
         {
-            if (vehicleMakeId != vehicleModelViewModel.VehicleMakeId) {
-                return BadRequest();
-            }
-
-            if (vehicleModelId != vehicleModelViewModel.VehicleModelId) {
-                return BadRequest();
-            }
-
             var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
-
             if (vehicleMake == null) {
                 return NotFound();
             }
 
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
+            var vehicleModel = await _context.VehicleModels.SingleOrDefaultAsync(o => o.VehicleModelId == vehicleModelId);
+            if (vehicleModel == null) {
+                return NotFound();
+            }
+
+            _mapper.Map(vehicleModelDto, vehicleModel);
 
             _context.Entry(vehicleModel).State = EntityState.Modified;
 
@@ -95,42 +92,40 @@ namespace PackageDelivery.WebApplication.ApiControllers
         // POST: api/VehicleModels
         [HttpPost]
         [Authorize(Policy = Policy.SuperAdmin)]
-        public async Task<IActionResult> PostVehicleModel([FromRoute] int vehicleMakeId, [FromBody] VehicleModelViewModel vehicleModelViewModel) {
-            if (vehicleMakeId != vehicleModelViewModel.VehicleMakeId) {
-                return BadRequest();
-            }
-
+        public async Task<IActionResult> PostVehicleModel([FromRoute] int vehicleMakeId, [FromBody] VehicleModelCreationDto vehicleModelDto) {
             var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
 
             if (vehicleMake == null) {
                 return NotFound();
             }
 
-            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelViewModel);
+            var vehicleModel = _mapper.Map<VehicleModel>(vehicleModelDto);
+            vehicleModel.VehicleMakeId = vehicleMakeId;
 
             _context.VehicleModels.Add(vehicleModel);
             await _context.SaveChangesAsync();
 
-            vehicleModelViewModel.VehicleModelId = vehicleModel.VehicleModelId;
-            return CreatedAtAction("GetVehicleModel", new { id = vehicleModelViewModel.VehicleModelId }, vehicleModelViewModel);
+            return CreatedAtAction("GetVehicleModel", new { id = vehicleModel.VehicleModelId }, _mapper.Map<VehicleModelDto>(vehicleModel));
         }
 
         // DELETE: api/VehicleModels/5
         [HttpDelete("{vehicleModelId}")]
         [Authorize(Policy = Policy.SuperAdmin)]
         public async Task<IActionResult> DeleteVehicleModel([FromRoute] int vehicleMakeId, [FromRoute] int vehicleModelId) {
-            var vehicleModel = await _context.VehicleModels.Include(o => o.VehicleMake)
-                .SingleOrDefaultAsync(m =>
-                    m.VehicleModelId == vehicleModelId && m.VehicleMake.VehicleMakeId == vehicleMakeId);
-            if (vehicleModel == null)
-            {
+            var vehicleMake = await _context.VehicleMakes.SingleOrDefaultAsync(o => o.VehicleMakeId == vehicleMakeId);
+            if (vehicleMake == null) {
+                return NotFound();
+            }
+
+            var vehicleModel = await _context.VehicleModels.SingleOrDefaultAsync(o => o.VehicleModelId == vehicleModelId);
+            if (vehicleModel == null) {
                 return NotFound();
             }
 
             _context.VehicleModels.Remove(vehicleModel);
             await _context.SaveChangesAsync();
 
-            return Ok(_mapper.Map<VehicleModelViewModel>(vehicleModel));
+            return Ok(_mapper.Map<VehicleModelDto>(vehicleModel));
         }
 
         private bool VehicleModelExists(int vehicleModelId, int vehicleMakeId)

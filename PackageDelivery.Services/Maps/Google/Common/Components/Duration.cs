@@ -1,4 +1,4 @@
-﻿namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components
+﻿namespace PackageDelivery.Services.Maps.Google.Common.Components
 {
     /// <summary>
     /// Duration component

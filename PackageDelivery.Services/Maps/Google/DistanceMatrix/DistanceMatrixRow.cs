@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.DistanceMatrix
+namespace PackageDelivery.Services.Maps.Google.DistanceMatrix
 {
     /// <summary>
     /// Distance matrix row component

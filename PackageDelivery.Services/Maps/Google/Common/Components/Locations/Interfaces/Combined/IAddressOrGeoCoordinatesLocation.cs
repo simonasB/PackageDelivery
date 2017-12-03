@@ -1,6 +1,6 @@
-﻿using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Common.Interfaces;
+﻿using PackageDelivery.Services.Maps.Google.Common.Components.Locations.Common.Interfaces;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Interfaces.Combined
+namespace PackageDelivery.Services.Maps.Google.Common.Components.Locations.Interfaces.Combined
 {
 
     /// <summary>

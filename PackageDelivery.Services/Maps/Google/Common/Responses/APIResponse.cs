@@ -2,7 +2,7 @@ using System.Runtime.Serialization;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Responses
+namespace PackageDelivery.Services.Maps.Google.Common.Responses
 {
     /// <summary>
     /// API response

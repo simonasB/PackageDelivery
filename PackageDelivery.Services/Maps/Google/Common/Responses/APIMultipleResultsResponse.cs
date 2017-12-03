@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using System.Runtime.Serialization;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Responses
+namespace PackageDelivery.Services.Maps.Google.Common.Responses
 {
     /// <summary>
     /// API multiple results response

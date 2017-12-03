@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.SharedKernel.Data.Maps;
-using PackageDelivery.WebApplication.Services.Maps.Google.DistanceMatrix;
-using PackageDelivery.WebApplication.Utils;
+using PackageDelivery.Services.Maps.Google.DistanceMatrix;
+using PackageDelivery.Services.Maps.Google.Utils;
 
-namespace PackageDelivery.WebApplication.Services.Maps {
+namespace PackageDelivery.Services.Maps {
     
     public class GoogleDistanceCalculator : GoogleServicesBase, IDistanceCalculator {
         public GoogleDistanceCalculator(HttpClient httpClient) : base(httpClient) {

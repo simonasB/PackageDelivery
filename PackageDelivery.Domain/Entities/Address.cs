@@ -11,7 +11,7 @@ namespace PackageDelivery.Domain.Entities {
         public string PostalCode { get; set; }
         public string City { get; set; }
         public DateTime RegistrationDate { get; set; }
-        public PickUpPoint PickUpPoint { get; set; }
+        public ICollection<PickUpPoint> PickUpPoint { get; set; }
         //public int? PickUpPointId { get; set; }
         [InverseProperty("PickUpAddress")]        
         public ICollection<Order> PickUpOrders { get; set; }

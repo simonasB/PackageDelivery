@@ -1,4 +1,4 @@
-namespace GoogleMapsApi.StaticMaps.Enums
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Enums
 {
 	/// <summary>
 	/// Images may be returned in several common web graphics formats: GIF, JPEG and PNG. The format parameter takes one of the following values:

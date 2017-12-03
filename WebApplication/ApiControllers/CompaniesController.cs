@@ -7,13 +7,12 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Core;
+using PackageDelivery.Data;
+using PackageDelivery.Domain.Dtos.CompanyDtos;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.WebApplication.Authorization;
-using PackageDelivery.WebApplication.Base;
-using PackageDelivery.WebApplication.Data;
 using PackageDelivery.WebApplication.Filters;
-using PackageDelivery.WebApplication.Models;
-using PackageDelivery.WebApplication.Models.Api;
 
 namespace PackageDelivery.WebApplication.ApiControllers
 {
@@ -37,35 +36,36 @@ namespace PackageDelivery.WebApplication.ApiControllers
         [AllowAnonymous]
         [HttpGet]
         public IActionResult GetCompanies() {
-            return Ok(_mapper.Map<IEnumerable<CompanyModel>>(_context.Companies));
+            return Ok(_mapper.Map<IEnumerable<CompanyDto>>(_context.Companies));
         }
 
         // GET: api/Companies/5
         [HttpGet("{companyId}")]
         [AllowAnonymous]
-        public async Task<IActionResult> GetCompany([FromRoute] int id)
+        public async Task<IActionResult> GetCompany([FromRoute] int companyId)
         {
-            var company = await _context.Companies.SingleOrDefaultAsync(m => m.CompanyId == id);
+            var company = await _context.Companies.SingleOrDefaultAsync(m => m.CompanyId == companyId);
 
             if (company == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<CompanyModel>(company));
+            return Ok(_mapper.Map<CompanyDto>(company));
         }
 
         // PUT: api/Companies/5
         [HttpPut("{companyId}")]
         [Authorize(Policy = Policy.CompanyMember)]
         [Authorize(Policy = Policy.Admin)]
-        public async Task<IActionResult> PutCompany([FromRoute] int companyId, [FromBody] CompanyModel companyModel) {
-            if (companyId != companyModel.CompanyId)
-            {
-                return BadRequest();
+        public async Task<IActionResult> PutCompany([FromRoute] int companyId, [FromBody] CompanyUpdateDto companyDto) {
+            var company = await _context.Companies.SingleOrDefaultAsync(o => o.CompanyId == companyId);
+
+            if (company == null) {
+                return NotFound();
             }
 
-            var company = _mapper.Map<Company>(companyModel);
+            _mapper.Map(companyDto, company);
 
             _context.Entry(company).State = EntityState.Modified;
 
@@ -90,14 +90,14 @@ namespace PackageDelivery.WebApplication.ApiControllers
 
         // POST: api/Companies
         [HttpPost]
-        public async Task<IActionResult> PostCompany([FromBody] CompanyModel companyModel) {
+        public async Task<IActionResult> PostCompany([FromBody] CompanyCreationDto companyDto) {
             var user = await _userManager.FindByIdAsync(User.Claims.Single(o => o.Type == Claims.NameIdentifier).Value);
 
             if (user.CompanyId.HasValue) {
                 return BadRequest("User cannot create more than one company.");
             }
 
-            var company = _mapper.Map<Company>(companyModel);
+            var company = _mapper.Map<Company>(companyDto);
 
             _context.Companies.Add(company);
             await _context.SaveChangesAsync();
@@ -110,8 +110,7 @@ namespace PackageDelivery.WebApplication.ApiControllers
             await _userManager.AddClaimAsync(user, new Claim(Claims.Role, UserRoles.ADMIN));
             await _userManager.AddClaimAsync(user, new Claim(Claims.CompanyId, company.CompanyId.ToString()));
 
-            companyModel.CompanyId = company.CompanyId;
-            return CreatedAtAction("GetCompany", new { id = company.CompanyId }, companyModel);
+            return CreatedAtAction("GetCompany", new { id = company.CompanyId }, _mapper.Map<CompanyDto>(company));
         }
 
         // DELETE: api/Companies/5
@@ -130,8 +129,9 @@ namespace PackageDelivery.WebApplication.ApiControllers
 
             var user = await _userManager.FindByIdAsync(User.Claims.Single(o => o.Type == Claims.NameIdentifier).Value);
             await _userManager.RemoveClaimAsync(user, User.Claims.Single(o => o.Type == Claims.CompanyId));
+            await _userManager.RemoveClaimAsync(user, User.Claims.Single(o => o.Type == Claims.Role && o.Value == UserRoles.ADMIN));
 
-            return Ok(_mapper.Map<CompanyModel>(company));
+            return Ok(_mapper.Map<CompanyDto>(company));
         }
 
         private bool CompanyExists(int id)

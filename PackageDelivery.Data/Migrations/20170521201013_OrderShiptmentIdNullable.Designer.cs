@@ -3,10 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using PackageDelivery.WebApplication.Data;
-using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.WebApplication.Data.Migrations
+namespace PackageDelivery.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
     [Migration("20170521201013_OrderShiptmentIdNullable")]

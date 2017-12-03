@@ -1,6 +1,6 @@
-﻿namespace PackageDelivery.WebApplication.Models.Api
+﻿namespace PackageDelivery.Domain.Dtos.VehicleModelDtos
 {
-    public class VehicleModelViewModel
+    public class VehicleModelDto
     {
         public int VehicleModelId { get; set; }
         public string Name { get; set; }

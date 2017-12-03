@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.WebApplication.Services
+namespace PackageDelivery.Services.Services
 {
     public class OptimalOrderDistributionAlgorithm : IOrdersDistributionAlgorithm
     {

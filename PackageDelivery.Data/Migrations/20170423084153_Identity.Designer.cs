@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace PackageDelivery.WebApplication.Data.Migrations
+namespace PackageDelivery.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
     [Migration("20170423084153_Identity")]

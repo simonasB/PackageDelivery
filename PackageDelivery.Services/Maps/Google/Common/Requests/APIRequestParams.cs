@@ -1,4 +1,4 @@
-﻿namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Requests
+﻿namespace PackageDelivery.Services.Maps.Google.Common.Requests
 {
 
     /// <summary>

@@ -1,8 +1,7 @@
 ﻿using System.Collections.Generic;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Responses;
 
-namespace PackageDelivery.WebApplication.Services
+namespace PackageDelivery.Services.Services
 {
     public interface IRouteCalculator {
         long CalculateRouteTime(

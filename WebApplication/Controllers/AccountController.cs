@@ -9,7 +9,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.WebApplication.Models.AccountViewModels;
-using PackageDelivery.WebApplication.Services;
 
 namespace PackageDelivery.WebApplication.Controllers
 {

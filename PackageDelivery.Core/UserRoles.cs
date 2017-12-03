@@ -1,4 +1,4 @@
-﻿namespace PackageDelivery.WebApplication.Base {
+﻿namespace PackageDelivery.Core {
     public static class UserRoles {
         public const string DRIVER = "Driver";
         public const string CUSTOMER = "Customer";

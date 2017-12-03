@@ -1,4 +1,4 @@
-﻿namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Common.Interfaces
+﻿namespace PackageDelivery.Services.Maps.Google.Common.Components.Locations.Common.Interfaces
 {
 
     /// <summary>

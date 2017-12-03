@@ -1,4 +1,4 @@
-namespace GoogleMapsApi.StaticMaps.Entities
+namespace PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities
 {
 	public class PathStyle
 	{

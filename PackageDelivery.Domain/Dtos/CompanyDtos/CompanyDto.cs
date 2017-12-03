@@ -1,7 +1,5 @@
-﻿namespace PackageDelivery.WebApplication.Models.Api
-{
-    public class CompanyModel
-    {
+﻿namespace PackageDelivery.Domain.Dtos.CompanyDtos {
+    public class CompanyDto {
         public int CompanyId { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }

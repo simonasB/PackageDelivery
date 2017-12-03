@@ -1,17 +1,16 @@
 ﻿using System.Globalization;
 using System.Runtime.Serialization;
-using GoogleMapsApi.Entities.Common;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Interfaces;
-using Location = PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Common.Location;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations.Interfaces;
+using PackageDelivery.Services.Maps.MapGenerator.Common;
 
-namespace PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations
+namespace PackageDelivery.Services.Maps.Google.Common.Components.Locations
 {
 
     /// <summary>
     /// Geographic coordinates location
     /// </summary>
     [DataContract]
-    public class GeoCoordinatesLocation : Location, IGeoCoordinatesLocation, ILocationString
+    public class GeoCoordinatesLocation : Common.Location, IGeoCoordinatesLocation, ILocationString
     {
 
         #region Properties

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Text;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Common.Interfaces;
-using PackageDelivery.WebApplication.Services.Maps.Google.Common.Components.Locations.Interfaces;
+using PackageDelivery.Services.Maps.Google.Common.Components;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations;
+using PackageDelivery.Services.Maps.Google.Common.Components.Locations.Interfaces;
 
-namespace PackageDelivery.WebApplication.Utils
+namespace PackageDelivery.Services.Maps.Google.Utils
 {
     /// <summary>
     /// Converts Python types to string representations suitable for Maps API server.

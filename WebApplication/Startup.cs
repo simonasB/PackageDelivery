@@ -10,13 +10,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PackageDelivery.Core;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
+using PackageDelivery.Services.Maps;
+using PackageDelivery.Services.Services;
 using PackageDelivery.SharedKernel.Data;
 using PackageDelivery.WebApplication.Authorization;
-using PackageDelivery.WebApplication.Base;
-using PackageDelivery.WebApplication.Data;
-using PackageDelivery.WebApplication.Services;
-using PackageDelivery.WebApplication.Services.Maps;
+using PackageDelivery.WebApplication.Initializers;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace PackageDelivery.WebApplication

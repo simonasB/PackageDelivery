@@ -14,9 +14,9 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.OAuth.Configuration;
-using PackageDelivery.WebApplication.Data;
 
 namespace PackageDelivery.OAuth
 {

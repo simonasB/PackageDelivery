@@ -6,12 +6,13 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using PackageDelivery.Core;
+using PackageDelivery.Data;
 using PackageDelivery.Domain.Entities;
+using PackageDelivery.Services.Maps;
 using PackageDelivery.WebApplication.Authorization;
-using PackageDelivery.WebApplication.Base;
-using PackageDelivery.WebApplication.Services.Maps;
 
-namespace PackageDelivery.WebApplication.Data {
+namespace PackageDelivery.WebApplication.Initializers {
     public class PackageDeliveryDbInitializer {
         private readonly PackageDeliveryContext _ctx;
         private readonly UserManager<User> _userMgr;
@@ -26,7 +27,11 @@ namespace PackageDelivery.WebApplication.Data {
         }
 
         public async Task CustomSeed() {
-            var userManager = new User {
+
+            var user = await _userMgr.FindByEmailAsync("super@admin.com");
+
+            await _userMgr.RemoveClaimAsync(user, new Claim(Claims.Role, UserRoles.ADMIN));
+            /*var userManager = new User {
                 UserName = "super@admin.com",
                 FirstName = "super",
                 LastName = "admin",
@@ -38,7 +43,7 @@ namespace PackageDelivery.WebApplication.Data {
             };
 
             var resultUsr = await _userMgr.CreateAsync(userManager, "P@assw0rd!");
-            var resultRole = await _userMgr.AddClaimAsync(userManager, new Claim(Claims.Role, UserRoles.SUPER_ADMIN));
+            var resultRole = await _userMgr.AddClaimAsync(userManager, new Claim(Claims.Role, UserRoles.SUPER_ADMIN));*/
         }
 
         public async Task Seed() {

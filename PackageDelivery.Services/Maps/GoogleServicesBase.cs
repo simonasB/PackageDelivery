@@ -3,7 +3,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
 
-namespace PackageDelivery.SharedKernel.Data.Maps {
+namespace PackageDelivery.Services.Maps {
     public abstract class GoogleServicesBase {
         protected readonly HttpClient _httpClient;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace PackageDelivery.Domain.Entities {
@@ -9,7 +8,8 @@ namespace PackageDelivery.Domain.Entities {
         public DateTime RegistrationDate { get; set; }
         public bool IsStatic { get; set; }
         public Address Address { get; set; }
-        public int AddressId { get; set; }
+        public int? AddressId { get; set; }
+        public string FullAddress { get; set; }
         public Company Company { get; set; }
         public int CompanyId { get; set; }
         public ICollection<Order> Orders { get; set; }

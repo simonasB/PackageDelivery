@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace GoogleMapsApi
+namespace PackageDelivery.Services.Maps.MapGenerator
 {
 	public class QueryStringParametersList
 	{

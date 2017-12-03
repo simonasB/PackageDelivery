@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using GoogleMapsApi.Entities.Common;
-using GoogleMapsApi.StaticMaps;
-using GoogleMapsApi.StaticMaps.Entities;
-using PackageDelivery.WebApplication.Services.Maps.Google.Directions.Responses;
+using PackageDelivery.Services.Maps.Google.Directions.Responses;
+using PackageDelivery.Services.Maps.MapGenerator.Common;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps;
+using PackageDelivery.Services.Maps.MapGenerator.StaticMaps.Entities;
 
-namespace PackageDelivery.WebApplication.Services.Maps {
+namespace PackageDelivery.Services.Maps {
     public class GoogleMapsGeneratorService : IMapsGeneratorService {
         private readonly StaticMapsEngine _staticMapsEngine;
 

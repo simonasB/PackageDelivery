@@ -1,4 +1,4 @@
-﻿namespace PackageDelivery.WebApplication.Services
+﻿namespace PackageDelivery.Services.Services
 {
     public interface IShipmentsCreationError {
         string GetResult();

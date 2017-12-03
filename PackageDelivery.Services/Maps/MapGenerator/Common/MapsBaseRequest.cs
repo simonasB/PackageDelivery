@@ -1,10 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
-using System.Net;
-using System.Linq;
 
-namespace GoogleMapsApi.Entities.Common
+namespace PackageDelivery.Services.Maps.MapGenerator.Common
 {
     public abstract class MapsBaseRequest
     {

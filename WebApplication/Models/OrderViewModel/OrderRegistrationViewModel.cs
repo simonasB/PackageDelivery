@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using PackageDelivery.Domain.Entities;
-using PackageDelivery.WebApplication.Data;
 
 namespace PackageDelivery.WebApplication.Models.OrderViewModel
 {

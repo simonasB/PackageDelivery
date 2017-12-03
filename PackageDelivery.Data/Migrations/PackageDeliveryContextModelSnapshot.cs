@@ -2,11 +2,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
-using PackageDelivery.WebApplication.Data;
-using PackageDelivery.Domain.Entities;
 
-namespace PackageDelivery.WebApplication.Data.Migrations
+namespace PackageDelivery.Data.Migrations
 {
     [DbContext(typeof(PackageDeliveryContext))]
     partial class PackageDeliveryContextModelSnapshot : ModelSnapshot
@@ -330,9 +327,11 @@ namespace PackageDelivery.WebApplication.Data.Migrations
                     b.Property<int>("PickUpPointId")
                         .ValueGeneratedOnAdd();
 
-                    b.Property<int>("AddressId");
+                    b.Property<int?>("AddressId");
 
                     b.Property<int>("CompanyId");
+
+                    b.Property<string>("FullAddress");
 
                     b.Property<bool>("IsStatic");
 
@@ -342,8 +341,7 @@ namespace PackageDelivery.WebApplication.Data.Migrations
 
                     b.HasKey("PickUpPointId");
 
-                    b.HasIndex("AddressId")
-                        .IsUnique();
+                    b.HasIndex("AddressId");
 
                     b.HasIndex("CompanyId");
 
@@ -623,8 +621,8 @@ namespace PackageDelivery.WebApplication.Data.Migrations
             modelBuilder.Entity("PackageDelivery.Domain.Entities.PickUpPoint", b =>
                 {
                     b.HasOne("PackageDelivery.Domain.Entities.Address", "Address")
-                        .WithOne("PickUpPoint")
-                        .HasForeignKey("PackageDelivery.Domain.Entities.PickUpPoint", "AddressId");
+                        .WithMany("PickUpPoint")
+                        .HasForeignKey("AddressId");
 
                     b.HasOne("PackageDelivery.Domain.Entities.Company", "Company")
                         .WithMany("PickUpPoints")
