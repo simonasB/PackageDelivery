@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PackageDelivery.Domain.Dtos.CompanyDtos;
+using PackageDelivery.Domain.Dtos.CurrencyDtos;
 using PackageDelivery.Domain.Dtos.PickUpPointDtos;
 using PackageDelivery.Domain.Dtos.VehicleDtos;
 using PackageDelivery.Domain.Dtos.VehicleMakeDtos;
@@ -28,6 +29,8 @@ namespace PackageDelivery.WebApplication.Models.Api {
             CreateMap<PickUpPoint, PickUpPointDto>();
             CreateMap<PickUpPointCreationDto, PickUpPoint>();
             CreateMap<PickUpPointUpdateDto, PickUpPoint>();
+
+            CreateMap<Currency, CurrencyDto>();
         }
     }
 }

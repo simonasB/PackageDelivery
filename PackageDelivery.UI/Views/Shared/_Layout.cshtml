@@ -1,4 +1,10 @@
-﻿@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+﻿@using System.Security.Claims
+@using PackageDelivery.Core
+@using PackageDelivery.UI.Api
+@using PackageDelivery.Domain.Dtos.CompanyDtos
+
+@inject Microsoft.ApplicationInsights.AspNetCore.JavaScriptSnippet JavaScriptSnippet
+@inject IApiService ApiService
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,14 +13,16 @@
     <title>@ViewData["Title"] - PackageDelivery.UI</title>
 
     <environment names="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap-darkly.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     </environment>
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.7/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     </environment>
     @Html.Raw(JavaScriptSnippet.FullScript)
 </head>
@@ -28,30 +36,79 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PackageDelivery.UI</a>
+                @if (User.Identity.IsAuthenticated) {
+                    Claim companyIdClaim;
+                    if ((companyIdClaim = User.Claims.FirstOrDefault(o => o.Type == Claims.CompanyId)) != null) {
+                        var companyName = (await ApiService.Get<CompanyDto>($"Companies/{companyIdClaim.Value}")).Name;
+
+                        <a asp-area="" asp-controller="Company" asp-action="Details" asp-route-id="@companyIdClaim.Value" class="navbar-brand">@companyName</a>
+                    } else {
+                        <a asp-area="" asp-controller="Company" asp-action="Create" class="navbar-brand">Create Company</a>
+                    }
+                }
+                else
+                {
+                    <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">PackageDelivery</a>
+                }
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="About">About</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                    @if(User.Claims.FirstOrDefault(o => o.Type == Claims.Role)?.Value == UserRoles.SUPER_ADMIN) {
+                        <li><a asp-area="" asp-controller="VehicleMakes" asp-action="Index">VehicleMakes</a></li>
+                    }
                     <li><a asp-area="" asp-controller="Home" asp-action="Logout">Logout</a></li>
                 </ul>
+                @await Html.PartialAsync("_LoginPartial")
             </div>
         </div>
     </nav>
     <div class="container body-content">
         @RenderBody()
         <hr />
-        <footer>
-            <p>&copy; 2017 - PackageDelivery.UI</p>
-        </footer>
     </div>
+    <div class="navbar navbar-default navbar-fixed-bottom">
+        <div class="container">
+            <p class="navbar-text pull-left">
+                <a data-toggle="modal" data-target="#myModal">© </a>2017 - Site Built By Mr. S.
+                <a href="https://linkedin.com"><i class="fa fa-linkedin-square fa-2x" aria-hidden="true"></i></a>
+                <a href="https://facebook.com"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+            </p>         
 
-    <environment names="Development">
+            <a href="http://youtu.be/zJahlKPCL9g" class="navbar-btn btn-danger btn pull-right">
+                <span class="glyphicon glyphicon-star"></span>  Subscribe on YouTube</a>
+        </div>
+    </div>  
+    
+    <!-- Modal -->
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Copyright</h4>
+                </div>
+                <div class="modal-body">
+                    <p>© 2017 - Site built by Simonas Baltulionis</p>
+                    <p>Version 1.0</p>
+                    <p>Repository: https://github.com/simonasB/PackageDelivery</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+<environment names="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
-        <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="https://use.fontawesome.com/51d4695ddf.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.2.0.min.js"
@@ -67,6 +124,7 @@
                 integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa">
         </script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
+        <script src="https://use.fontawesome.com/51d4695ddf.js"></script>
     </environment>
 
     @RenderSection("Scripts", required: false)

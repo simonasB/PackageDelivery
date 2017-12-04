@@ -6,9 +6,6 @@ using PackageDelivery.Core;
 using PackageDelivery.Domain.Dtos;
 using PackageDelivery.Domain.Entities;
 using PackageDelivery.WebApplication.Filters;
-using PackageDelivery.WebApplication.Models;
-using PackageDelivery.WebApplication.Models.AccountViewModels;
-using PackageDelivery.WebApplication.Models.Api;
 
 namespace PackageDelivery.WebApplication.ApiControllers {
     [AllowAnonymous]

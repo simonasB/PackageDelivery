@@ -1,4 +1,4 @@
-@model PackageDelivery.Domain.Entities.Company
+@model PackageDelivery.Domain.Dtos.CompanyDtos.CompanyCreationDto
 
 @{
     ViewData["Title"] = "Create";
@@ -11,14 +11,6 @@
         <h4>Company</h4>
         <hr />
         <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <div class="checkbox">
-                    <input asp-for="IsActive" />
-                    <label asp-for="IsActive"></label>
-                </div>
-            </div>
-        </div>
         <div class="form-group">
             <label asp-for="Name" class="col-md-2 control-label"></label>
             <div class="col-md-10">
@@ -34,16 +26,9 @@
             </div>
         </div>
         <div class="form-group">
-            <label asp-for="RegistrationDate" class="col-md-2 control-label"></label>
-            <div class="col-md-10">
-                <input asp-for="RegistrationDate" class="form-control" />
-                <span asp-validation-for="RegistrationDate" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="form-group">
             <label asp-for="CurrencyId" class="col-md-2 control-label"></label>
             <div class="col-md-10">
-                <select asp-for="CurrencyId" class ="form-control" asp-items="ViewBag.CurrencyId"></select>
+                <select asp-for="CurrencyId" class="form-control" asp-items="ViewBag.CurrencyId"></select>
             </div>
         </div>
         <div class="form-group">
@@ -68,7 +53,7 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="col-md-2 control-label">Ratio</label>
+            <label asp-for="VolumeAndWeightRatioToApplyVolumePrice" class="col-md-2 control-label"></label>
             <div class="col-md-10">
                 <input asp-for="VolumeAndWeightRatioToApplyVolumePrice" class="form-control" />
                 <span asp-validation-for="VolumeAndWeightRatioToApplyVolumePrice" class="text-danger"></span>
@@ -81,6 +66,10 @@
         </div>
     </div>
 </form>
+
+<div>
+    <a asp-action="Index" asp-controller="Home">Back</a>
+</div>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

@@ -1,0 +1,54 @@
+@model PackageDelivery.Domain.Dtos.CompanyDtos.CompanyDto
+
+@{
+    ViewData["Title"] = "Company";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Company</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KilometerPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KilometerPrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.KilogramPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.KilogramPrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.CubePrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CubePrice)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.VolumeAndWeightRatioToApplyVolumePrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.VolumeAndWeightRatioToApplyVolumePrice)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.CompanyId" class="btn btn-default">Edit</a>
+    <a asp-action="Delete" asp-route-id="@Model.CompanyId" class="btn btn-danger">Delete</a>
+</div>
